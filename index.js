@@ -38,16 +38,14 @@ async function run() {
             const product = await productsCollection.findOne(query);
             res.send(product);
         })
-        app.get('/products', async (req, res) => {
-            console.log(req.query);
+
+        app.get('/myproducts', async (req, res) => {
             const email = req.query.email;
-            const query = {};
+            const query = { email: email };
             const cursor = productsCollection.find(query);
-            console.log(cursor)
-            const matched = cursor.filter(product => product.email.includes(email));
-            const matchedProducts = await matched.toArray();
-            res.send(matchedProducts);
-        })
+            const myProducts = await cursor.toArray();
+            res.send(myProducts);
+        });
 
         //post
         app.post('/products', async (req, res) => {
@@ -55,6 +53,7 @@ async function run() {
             const result = await productsCollection.insertOne(newProduct);
             res.send(result);
         })
+
 
         //update 
         app.put('/products/:id', async (req, res) => {
