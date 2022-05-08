@@ -61,12 +61,12 @@ async function run() {
             const updateProducts = req.body;
             const filter = { _id: ObjectId(id) };
             const options = { upsert: true };
-            const updateProduct = {
+            const Product = {
                 $set: {
-                    quantity: updateProducts.quantity,
+                    quantity: updateProducts.quantity
                 }
             }
-            const result = await productsCollection.updateOne(filter, updateProduct, options);
+            const result = await productsCollection.updateOne(filter, Product, options);
             res.send(result);
         })
 
